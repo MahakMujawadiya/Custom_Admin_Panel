@@ -1,0 +1,152 @@
+<html>
+    <head>
+        <title>Home page</title>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-giJF6kkoqNQ00vy+HMDP7azOuL0xtbfIcaT9wjKHr8RbDVddVHyTfAAsrekwKmP1" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+        <style>
+            input::-webkit-outer-spin-button,
+            input::-webkit-inner-spin-button{
+              -webkit-appearance: none;
+              margin:0;
+            }
+          </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-dark bg-primary justify-content-between">
+            <a class="navbar-brand">Mysite</a>
+            {% comment %} <form class="form-inline">
+              <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+              <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form> {% endcomment %}
+            <h5 style="color:white">Welcome {{ data.username }}</h5>
+          </nav>
+
+        <div id="detail"><center>
+        <h1>Hey {{ data.username }}!!!! Welcome to Home page.....</h1>
+        <h3>Your email address:{{ data.email }}</h3>
+        <h3>Your Detail info:</p>
+        <h5>First Name: {{ data.first_name }}</h5>
+        <h5>Last Name: {{ data.last_name }}</h5>
+        <h5>Email: {{ data.email }}</h5>
+        <h5>Phone: {{ data.phone }}</h5>
+        <h5>Pincode: {{ data.pincode }}</h5>
+    <a href={% url "logout" %} style="color:white;text-decoration: none" class="btn btn-primary" role="button">Logout</a>
+    <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#myModal">Edit</button></center>
+    <div class="modal" id="myModal">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Profile</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form class="mx-md-4" method="post">
+                        {% if error1 %}
+                          <div class = "alert alert-danger" role="alter">Your password and confirm password is not same!!!!</div>
+                         {% endif %}
+                         {% if error2 %}
+                         <div class = "alert alert-danger" role="alter">Email already exist!!!!</div>
+                        {% endif %}
+                        {% if error3 %}
+                        <div class = "alert alert-danger" role="alter">Please use only alpha charactors in fname!!!!</div>
+                       {% endif %}
+                       {% if error4 %}
+                       <div class = "alert alert-danger" role="alter">Please use only alpha charactors in Lname!!!!</div>
+                      {% endif %}
+                      {% if error5 %}
+                      <div class = "alert alert-danger" role="alter">Mobile number should be 10!!!!</div>
+                     {% endif %}
+                     {% if error6 %}
+                     <div class = "alert alert-danger" role="alter">Pincode should be 6!!!!</div>
+                    {% endif %}
+                      {% csrf_token %}
+                          <div class="row">
+                              <div class="col">
+                          <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                              <input type="text" id="form53Example1c" class="form-control" name="username" value={{ data.username }} required/>
+                              <label class="form-label" for="form53Example1c">Username</label>
+                            </div>
+                          </div>
+                      </div>
+                          <div class="col">
+                          <div class="d-flex flex-row align-items-center mb-4">
+                              <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                              <div class="form-outline flex-fill mb-0">
+                                <input type="text" id="form43Example1c" class="form-control" name="fname" value={{ data.first_name }} required/>
+                                <label class="form-label" for="form43Example1c">First Name</label>
+                              </div>
+                            </div>
+                          </div>
+                      </div>
+                      <div class="row">
+                          <div class="col">
+                            <div class="d-flex flex-row align-items-center mb-4">
+                              <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                              <div class="form-outline flex-fill mb-0">
+                                <input type="text" id="form33Example1c" class="form-control" name="lname" value={{ data.last_name }} required/>
+                                <label class="form-label" for="form33Example1c">Last Name </label>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col">
+                          <div class="d-flex flex-row align-items-center mb-4">
+                            <i class="fas fa-envelope fa-lg me-3 fa-fw"></i>
+                            <div class="form-outline flex-fill mb-0">
+                              <input type="email" id="form3Example7c" class="form-control" name="email" value={{ data.email }} disabled/>
+                              <label class="form-label" for="form3Example7c">Your Email</label>
+                            </div>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="row">
+                      <div class="col">
+                  <div class="d-flex flex-row align-items-center mb-4">
+                    <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                    <div class="form-outline flex-fill mb-0">
+                      <input type="text" for="fom" minlength="10" maxlength = "10" name="phone" id="form3Example" class="phone form-control" value={{ data.phone }} required/>
+                      {% comment %} <input type="number" id="form3Example1c" class="form-control" name="phone" maxlength=10 minlength=10 required/> {% endcomment %}
+                      <label class="form-label" for="fom">Phone</label>
+                    </div>
+                  </div>
+              </div>
+                  <div class="col">
+                  <div class="d-flex flex-row align-items-center mb-4">
+                      <i class="fas fa-user fa-lg me-3 fa-fw"></i>
+                      <div class="form-outline flex-fill mb-0">
+                        <input name="pincode" for="form3le1" type="text" id="form4Example1c" class="zip form-control" minlength="6" maxlength = "6" value={{ data.pincode }} required/>
+                        {% comment %} <input type="number" id="form3Example1c" class="form-control" name="pincode" maxlength=6 minlength=6 required/> {% endcomment %}
+                        <label class="form-label" for="form3le1">Pincode</label>
+                      </div>
+                    </div>
+                  </div>
+              </div>
+              <div class="modal-footer">
+                <button type="submit" class="btn btn-primary">Save</button>
+                {% comment %} <button type="submit" class="btn btn-danger">Cancel</button> {% endcomment %}
+            </div>
+                </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<script>
+  document.querySelector(".phone").addEventListener("keypress", function (evt) {
+    if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+    {
+        evt.preventDefault();
+    }
+});
+document.querySelector(".zip").addEventListener("keypress", function (evt) {
+  if (evt.which != 8 && evt.which != 0 && evt.which < 48 || evt.which > 57)
+  {
+      evt.preventDefault();
+  }
+});
+</script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta1/dist/js/bootstrap.bundle.min.js" integrity="sha384-ygbV9kiqUc6oa4msXn9868pTtWMgiQaeYH7/t7LECLbyPA2x65Kgf80OJFdroafW" crossorigin="anonymous"></script>
+</body>
+</html>
